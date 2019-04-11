@@ -10,4 +10,8 @@
 + 结束部分：结束语，播放宣传视频
 
 ## 界面设计
-
+![游戏操作说明](\img\info1.jpeg)
+![手势学习](\img\info2.jpeg)
+![开始界面](\img\info3.jpeg)
+![游戏部分](\img\info4.jpeg)
+![结束部分](\img\info5.jpeg)
