@@ -1,4 +1,5 @@
-
+from camera import Camera
+from PyQt5.QtCore import pyqtSlot
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_StartForm(object):
@@ -49,6 +50,7 @@ class Ui_StartForm(object):
         self.learn.setMaximumSize(QtCore.QSize(16777215, 40))
         self.learn.setStyleSheet("font: 24pt \"Wawati SC\";")
         self.learn.setObjectName("learn")
+        self.learn.clicked.connect(self.learnFeature)
         self.verticalLayout_2.addWidget(self.learn)
         self.start = QtWidgets.QPushButton(self.frame1)
         self.start.setMinimumSize(QtCore.QSize(0, 40))
@@ -62,6 +64,7 @@ class Ui_StartForm(object):
         self.start.setFont(font)
         self.start.setStyleSheet("font: 24pt \"Wawati SC\";")
         self.start.setObjectName("start")
+        self.start.clicked.connect(self.startGame)
         self.verticalLayout_2.addWidget(self.start)
         self.verticalLayout_3.addWidget(self.frame1)
 
@@ -76,4 +79,19 @@ class Ui_StartForm(object):
         self.label_3.setText(_translate("StartForm", "游戏中请你尽量不要多管闲事，非礼勿听，非礼勿看，非礼勿言"))
         self.learn.setText(_translate("StartForm", "· 进入游戏说明阶段（手势学习）"))
         self.start.setText(_translate("StartForm", "· 直接进入游戏"))
+
+    # 开始游戏
+    @pyqtSlot()
+    def startGame(self):
+        pass
+
+
+    # 启动摄像头，进入学习模块
+    @pyqtSlot()
+    def learnFeature(self):
+        camera = Camera(0)
+        camera.learnRunCamera()
+        camera.closeCamera()
+
+
 

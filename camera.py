@@ -6,12 +6,45 @@ class Camera:
         self.cap = cv2.VideoCapture(NO)
         self.face_cascade = cv2.CascadeClassifier("/anaconda3/pkgs/libopencv-3.4.2-h7c891bd_1/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml")
         self.failed = 2
+        self.is_ok = False
 
+    # 关闭摄像头
     def closeCamera(self):
-        # 关闭摄像头
         self.cap.release()
 
-    def runCamera(self):
+    # 学习手势时摄像头的动作
+    def learnRunCamera(self):
+        while True:
+            sucess, img = self.cap.read()
+            if sucess:
+                GaussianImage = cv2.GaussianBlur(img, (7, 7), 0)
+                faces = None
+
+                if not self.is_ok:
+                    faces = self.face_cascade.detectMultiScale(GaussianImage, 1.3, 5)
+
+                if faces != None and len(faces) > 0:
+                    for faceRect in faces:
+                        x, y, w, h = faceRect
+                        cv2.rectangle(img, (x, y), (x + w - 15, y + h + 15), (255, 255, 255), 10)
+
+                if not self.is_ok:
+                    cv2.putText(img=img, text="Please click K when the face recognition is successful", fontScale=1,
+                                fontFace=cv2.FONT_HERSHEY_COMPLEX, color=(255, 255, 255), org=(30, int(img.shape[1] / 2)))
+                else:
+                    # 按照姿势识别动作，模型输入接口
+                    pass
+
+                cv2.imshow('img',img)
+
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cv2.destroyAllWindows()
+                break
+            if cv2.waitKey(1) & 0xFF == ord('k'):
+                self.is_ok = True
+
+
+    def gameRunCamera(self):
         while True:
             sucess, img = self.cap.read()
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -61,6 +94,3 @@ class Camera:
 
                             pass
         self.closeCamera()
-
-# test = Camera(0)
-# test.runCamera()

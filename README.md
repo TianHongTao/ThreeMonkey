@@ -11,7 +11,7 @@
 
 ## 界面设计
 ![](/img/info1.jpeg)
-![](/img/info2.jpeg)
+![](/img/iinfo2.jpeg)
 ![](/img/info3.jpeg)
 ![](/img/info4.jpeg)
 ![](/img/info5.jpeg)
