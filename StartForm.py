@@ -1,9 +1,17 @@
 from camera import Camera
 from PyQt5.QtCore import pyqtSlot
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication,QWidget
+from LearnForm import Ui_LearnForm
+from learning import Ui_Form
+from PyQt5.QtCore import QTimer, QObject
 
 class Ui_StartForm(object):
     def setupUi(self, StartForm):
+        # 姿势学习结束页面
+        self.learnForm = None
+        # 姿势学习页面
+        self.learning = None
         StartForm.setObjectName("StartForm")
         StartForm.resize(734, 498)
         StartForm.setMinimumSize(QtCore.QSize(734, 498))
@@ -83,15 +91,31 @@ class Ui_StartForm(object):
     # 开始游戏
     @pyqtSlot()
     def startGame(self):
-        pass
+        camera = Camera(0)
+        flag = camera.startRunCamera(True)
+        if flag:
+            self.learnForm = QWidget()
+            learnForm = Ui_LearnForm()
+            learnForm.setupUi(self.learnForm)
+            self.learnForm.show()
+
 
 
     # 启动摄像头，进入学习模块
     @pyqtSlot()
     def learnFeature(self):
-        camera = Camera(0)
-        camera.learnRunCamera()
-        camera.closeCamera()
+        # 进入姿势学习界面
+        self.learning = QWidget()
+        learning = Ui_Form()
+        learning.setupUi(self.learning)
+        self.learning.show()
+        learning.show_camera()
+            # camera.learnRunCamera(learning,self.learning)
+        # if flag: # 进入游戏开始界面
+        #     self.learnForm = QWidget()
+        #     learnForm = Ui_LearnForm()
+        #     learnForm.setupUi(self.learnForm)
+        #     self.learnForm.show()
 
 
 
