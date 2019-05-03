@@ -72,11 +72,10 @@ class Ui_Form(QObject):
 
     @pyqtSlot()
     def show_camera(self):
-        self.test+=1
+        self.test += 1
         flag, image = self.camera.read()
         show = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], QtGui.QImage.Format_RGB888)
-
 
         # 缺少模型输入检测模块,本处为测试
         if self.test == 50:
@@ -89,15 +88,15 @@ class Ui_Form(QObject):
             self.featrure[2] = True
 
         if not self.featrure[0]:
-            self.retranslateUi(self.Form, showImage,FILE1, WORDS1)
+            self.retranslateUi(self.Form, showImage, FILE1, WORDS1)
             threading.Timer(0.05, self.show_camera).start()
         elif not self.featrure[1]:
-            self.retranslateUi(self.Form, showImage,FILE2, WORDS1)
+            self.retranslateUi(self.Form, showImage, FILE2, WORDS1)
             threading.Timer(0.05, self.show_camera).start()
         elif not self.featrure[2]:
-            self.retranslateUi(self.Form, showImage,FILE3, WORDS1)
+            self.retranslateUi(self.Form, showImage, FILE3, WORDS1)
             threading.Timer(0.05, self.show_camera).start()
-        if not(False in self.featrure):
+        if not (False in self.featrure):
             self.Form.close()
 
 
