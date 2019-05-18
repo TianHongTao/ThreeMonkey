@@ -17,7 +17,7 @@ class myLabel(QLabel):
             self.clicked.emit()
 
 class allSee_Form(object):
-    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
         Form.setObjectName("Form")
         Form.resize(463, 288)
         self.start = start
@@ -28,6 +28,7 @@ class allSee_Form(object):
         self.whatdo = whatdo
         self.allsee = allsee
         self.finish = finish
+        self.finishlearning = finishlearning
         self.Form = Form
         self.tmp = None
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -41,6 +42,7 @@ class allSee_Form(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
+        self.label.clicked.connect(self.next)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem2)
         self.label_2 = myLabel(Form)
@@ -48,6 +50,7 @@ class allSee_Form(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
+        self.label_2.clicked.connect(self.watch)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem3)
         spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -59,6 +62,7 @@ class allSee_Form(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
+        self.label_3.clicked.connect(self.Return)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem6)
         spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -80,16 +84,14 @@ class allSee_Form(object):
     @pyqtSlot()
     def Return(self):
         self.tmp = QWidget()
-        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
-                           self.finish)
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
         self.Form.hide()
         self.tmp.show()
 
     @pyqtSlot()
-    def choose(self):
+    def next(self):
         self.tmp = QWidget()
-        self.choose.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
-                           self.finish)
+        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
         self.Form.hide()
         self.tmp.show()
 

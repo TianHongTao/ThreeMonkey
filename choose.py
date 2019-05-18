@@ -9,6 +9,65 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtMultimedia import *
+from PyQt5.QtMultimediaWidgets import QVideoWidget
+
+PATH1 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/游戏 不听 前.mov")
+PATH2 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不看 前.mov")
+PATH3 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不说 前.mov")
+PATH4 = QUrl("file:///Users/denhiroshi/Desktop/＋_＋ 2019-04-04 09.32.05.mp4")
+
+
+class GUI(QWidget):
+    def __init__(self, Form, flag, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+        super(GUI,self).__init__()
+        self.start = start
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
+        self.isFirst = True
+        self.flag = flag
+        self.Form = QWidget()
+        self.onlearning.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, flag)
+        self.layout = QVBoxLayout()
+        self.vw = QVideoWidget()
+        self.player = QMediaPlayer()
+        self.vw.setAspectRatioMode(Qt.IgnoreAspectRatio)
+        # self.vw.setFullScreen(True)
+        self.layout.addWidget(self.vw)
+        self.setLayout(self.layout)
+        self.showFullScreen()
+
+    def keyPressEvent(self,event):
+        if (event.key() == Qt.Key_Return):
+            self.player.play()  # 播放视频
+            if self.isFirst:
+                self.player.stateChanged.connect(self.Next)
+                self.isFirst = False
+        if (event.key() ==  Qt.Key_Space):
+            self.player.pause()
+        if (event.key() == Qt.Key_Escape):
+            self.player.stop()
+            self.vw.hide()
+            self.showMinimized()
+            self.close()
+            self.Form.show()
+
+    @pyqtSlot()
+    def Next(self):
+        if self.player.state() == QMediaPlayer.StoppedState:
+            print(self.flag)
+            self.vw.hide()
+            self.showMinimized()
+            self.close()
+            self.Form.show()
+            self.onlearning.Game()
+
 
 class myLabel(QLabel):
     clicked = pyqtSignal()
@@ -20,6 +79,8 @@ class Choose_Form(object):
     def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
         Form.setObjectName("Form")
         Form.resize(511, 300)
+        self.flag = ""
+        self.window = None
         self.start = start
         self.onlearning = onlearning
         self.readMe = readMe
@@ -45,22 +106,26 @@ class Choose_Form(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout.addWidget(self.label_3)
+        self.label_3.clicked.connect(self.noListen)
         self.label_6 = myLabel(Form)
         self.label_6.setStyleSheet("font: 36pt \"FZZhengHeiS-EB-GB\";")
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout.addWidget(self.label_6)
+        self.label_6.clicked.connect(self.noSee)
         self.label_2 = myLabel(Form)
         self.label_2.setStyleSheet("font: 36pt \"FZZhengHeiS-EB-GB\";")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
+        self.label_2.clicked.connect(self.noSay)
         self.label_4 = myLabel(Form)
         self.label_4.setStyleSheet("font: 36pt \"FZZhengHeiS-EB-GB\";")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout.addWidget(self.label_4)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.label_4.clicked.connect(self.four)
         self.label_5 = myLabel(Form)
         self.label_5.setStyleSheet("font: 18pt \"MF LiHei (Noncommercial)\";")
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
@@ -80,6 +145,56 @@ class Choose_Form(object):
         self.label_2.setText(_translate("Form", "3"))
         self.label_4.setText(_translate("Form", "4"))
         self.label_5.setText(_translate("Form", "返回首页"))
+
+    @pyqtSlot()
+    def noListen(self):
+        self.Form.hide()
+        self.flag = "NoListen"
+        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.window.player.setVideoOutput(self.window.vw)
+        playlist = QMediaPlaylist()
+        playlist.addMedia(QMediaContent(PATH1))
+        playlist.setPlaybackMode(0)
+        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.play()  # 播放视频
+
+    @pyqtSlot()
+    def noSee(self):
+        self.Form.hide()
+        self.flag = "NoSee"
+        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.window.player.setVideoOutput(self.window.vw)
+        playlist = QMediaPlaylist()
+        playlist.addMedia(QMediaContent(PATH2))
+        playlist.setPlaybackMode(0)
+        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.play()  # 播放视频
+
+    @pyqtSlot()
+    def noSay(self):
+        self.Form.hide()
+        self.flag = "NoSay"
+        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.window.player.setVideoOutput(self.window.vw)
+        playlist = QMediaPlaylist()
+        playlist.addMedia(QMediaContent(PATH3))
+        playlist.setPlaybackMode(0)
+        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.play()  # 播放视频
+
+
+    @pyqtSlot()
+    def four(self):
+        self.Form.hide()
+        self.flag = "tmp"
+        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.window.player.setVideoOutput(self.window.vw)
+        playlist = QMediaPlaylist()
+        playlist.addMedia(QMediaContent(PATH4))
+        playlist.setPlaybackMode(0)
+        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.play()  # 播放视频
+
 
     @pyqtSlot()
     def Return(self):
