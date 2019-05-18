@@ -7,48 +7,73 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSlot
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+
+class myLabel(QLabel):
+    clicked = pyqtSignal()
+    def mouseReleaseEvent(self, QMouseEvent):
+        if QMouseEvent.button() == Qt.LeftButton:
+            self.clicked.emit()
+
+class StartNew_Form(object):
+    def setupUi(self, Form, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
         Form.setObjectName("Form")
         Form.resize(520, 383)
+        self.Form  = Form
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.label = QtWidgets.QLabel(Form)
+        self.label = myLabel(Form)
         font = QtGui.QFont()
         font.setFamily("STKaiti")
         font.setPointSize(64)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
+        self.tmp = None
         self.label.setFont(font)
         self.label.setStyleSheet("font: 64pt \"STKaiti\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2 =myLabel(Form)
         self.label_2.setStyleSheet("font: 18pt \"Weibei SC\";")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
-        self.label_3 = QtWidgets.QLabel(Form)
+        self.label_3 = myLabel(Form)
         self.label_3.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.label_3.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.label_3.setStyleSheet("font: 24pt \"MF LiHei (Noncommercial)\";")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
-        self.label_4 = QtWidgets.QLabel(Form)
+        self.label_3.clicked.connect(self.readME)
+
+        self.label_4 = myLabel(Form)
         self.label_4.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.label_4.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.label_4.setStyleSheet("font: 18pt \"MF LiHei (Noncommercial)\";")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.verticalLayout.addWidget(self.label_4)
+        self.label_4.clicked.connect(self.startGame)
+
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem2)
 
@@ -63,3 +88,16 @@ class Ui_Form(object):
         self.label_3.setText(_translate("Form", "游戏简介"))
         self.label_4.setText(_translate("Form", "开始游戏"))
 
+    @pyqtSlot()
+    def readME(self):
+        self.tmp = QWidget()
+        self.readMe.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()
+
+    @pyqtSlot()
+    def startGame(self):
+        self.tmp = QWidget()
+        self.study.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()

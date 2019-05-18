@@ -7,14 +7,33 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+class myLabel(QLabel):
+    clicked = pyqtSignal()
+    def mouseReleaseEvent(self, QMouseEvent):
+        if QMouseEvent.button() == Qt.LeftButton:
+            self.clicked.emit()
+
+class finishlearning_Form(object):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+        self.start = start
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
+        self.Form = Form
+        self.tmp = None
         Form.setObjectName("Form")
         Form.resize(520, 331)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(Form)
+        self.label = myLabel(Form)
         self.label.setMaximumSize(QtCore.QSize(16777215, 20))
         self.label.setStyleSheet("font: 16pt \"FZZhengHeiS-EB-GB\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
@@ -28,18 +47,20 @@ class Ui_Form(object):
         self.verticalLayout.addItem(spacerItem2)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem3)
-        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2 = myLabel(Form)
         self.label_2.setStyleSheet("font: 36pt \"MF LiHei (Noncommercial)\";")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
+        self.label_2.clicked.connect(self.next)
         spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem4)
-        self.label_3 = QtWidgets.QLabel(Form)
+        self.label_3 = myLabel(Form)
         self.label_3.setStyleSheet("font: 20pt \"MF LiHei (Noncommercial)\";")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
+        self.label_3.clicked.connect(self.Return)
         spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem5)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -56,4 +77,19 @@ class Ui_Form(object):
         self.label.setText(_translate("Form", "你已经完成了所有手势的学习，请在接下来的游戏中合理运用所学知识"))
         self.label_2.setText(_translate("Form", "进入游戏"))
         self.label_3.setText(_translate("Form", "返回首页"))
+
+    @pyqtSlot()
+    def Return(self):
+        print("flag")
+        self.tmp = QWidget()
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()
+
+    @pyqtSlot()
+    def next(self):
+        self.tmp = QWidget()
+        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()
 

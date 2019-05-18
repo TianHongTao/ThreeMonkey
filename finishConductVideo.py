@@ -7,11 +7,30 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+class myLabel(QLabel):
+    clicked = pyqtSignal()
+    def mouseReleaseEvent(self, QMouseEvent):
+        if QMouseEvent.button() == Qt.LeftButton:
+            self.clicked.emit()
+
+class finish_Form(object):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
         Form.setObjectName("Form")
         Form.resize(496, 315)
+        self.start = start
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
+        self.Form = Form
+        self.tmp = None
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -51,4 +70,22 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "返回游戏关卡页"))
         self.label_2.setText(_translate("Form", "返回首页 "))
+
+    @pyqtSlot()
+    def Return(self):
+        self.tmp = QWidget()
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
+                           self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()
+
+    @pyqtSlot()
+    def choose(self):
+        self.tmp = QWidget()
+        self.choose.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
+                           self.finish, self.finishlearning)
+        self.Form.hide()
+        self.tmp.show()
+
+
 

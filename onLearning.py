@@ -7,11 +7,37 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QIcon, QFont, QPixmap, QPainter, QImage
+import cv2
+import threading
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+FILE1 = "img/1.png"
+FILE2 = "img/2.png"
+FILE3 = "img/3.png"
+WORDS1 = "等待识别中, 请做出左图姿势"
+WORDS2 = "识别失败, 请再次做出左图姿势"
+WORDS3 = "(识别成功)干得漂亮"
+
+class Onlearn_Form(object):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
         Form.setObjectName("Form")
         Form.resize(648, 454)
+        self.test = 0
+        self.start = start
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
+        self.Form = Form
+        self.tmp = None
+        self.featrure = [False,False,False]
+        self.camera = cv2.VideoCapture(0)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.words = QtWidgets.QLabel(Form)
@@ -69,15 +95,52 @@ class Ui_Form(object):
         self.verticalLayout_2.addWidget(self.videoShow)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.timer = QTimer()
+        # 定时器结束，触发showTime方法
+        self.timer.timeout.connect(self.show_camera)
 
-        self.retranslateUi(Form)
+        self.retranslateUi(Form, None ,FILE1, "等待识别中, 请作出左图姿势")
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form, Qimg, filename, words):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.words.setText(_translate("Form", "TextLabel"))
-        self.pictureShow.setText(_translate("Form", "TextLabel"))
-        self.label_4.setText(_translate("Form", "请根据左边手势进行动作模仿"))
-        self.videoShow.setText(_translate("Form", "TextLabel"))
+        self.label_4.setText(_translate("Form", words))
+        if Qimg is None:
+            self.videoShow.setText(_translate("Form", "Camera_waiting"))
+        else:
+            self.videoShow.setPixmap(QPixmap.fromImage(Qimg))
+        self.timer.start(20)
 
+    def show_camera(self):
+        self.test += 1
+        flag, image = self.camera.read()
+        show = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], QtGui.QImage.Format_RGB888)
+        # 缺少模型输入检测模块,本处为测试
+        if self.test == 50:
+            self.featrure[0] = True
+
+        if self.test == 100:
+            self.featrure[1] = True
+
+        if self.test == 150:
+            self.featrure[2] = True
+
+        if not self.featrure[0]:
+            self.retranslateUi(self.Form, showImage, FILE1, WORDS1)
+            # threading.Timer(0.05, self.show_camera).start()
+        elif not self.featrure[1]:
+            self.retranslateUi(self.Form, showImage, FILE2, WORDS1)
+            # threading.Timer(0.05, self.show_camera).start()
+        elif not self.featrure[2]:
+            self.retranslateUi(self.Form, showImage, FILE3, WORDS1)
+            # threading.Timer(0.05, self.show_camera).start()
+        if not (False in self.featrure):
+            self.timer.stop()
+            self.camera.release()
+            self.tmp = QWidget()
+            self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+            self.tmp.show()
+            self.Form.hide()
