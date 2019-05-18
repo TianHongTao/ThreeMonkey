@@ -20,6 +20,7 @@ WORDS1 = "等待识别中, 请做出左图姿势"
 WORDS2 = "识别失败, 请再次做出左图姿势"
 WORDS3 = "(识别成功)干得漂亮"
 
+
 class Onlearn_Form(object):
     def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
         Form.setObjectName("Form")
