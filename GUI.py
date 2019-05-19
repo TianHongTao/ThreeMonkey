@@ -12,6 +12,7 @@ from finishLearn import finishlearning_Form
 from choose import Choose_Form
 from whatDo import whatDo_Form
 from allSee import allSee_Form
+from ending import Ending_Form
 from finishConductVideo import finish_Form
 import sys
 
@@ -27,6 +28,7 @@ if __name__ == '__main__':
     whatDo = whatDo_Form()
     allsee = allSee_Form()
     finish = finish_Form()
-    StartForm.setupUi(start, onlearn, readMe, study, choose, whatDo, allsee, finish, finishlearning)
+    ending = Ending_Form()
+    StartForm.setupUi(start, onlearn, readMe, study, choose, whatDo, allsee, finish, finishlearning, ending)
     start.show()
     sys.exit(app.exec_())

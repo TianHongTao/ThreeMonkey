@@ -17,7 +17,8 @@ class myLabel(QLabel):
             self.clicked.emit()
 
 class allSee_Form(object):
-    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
+        self.ending = ending
         Form.setObjectName("Form")
         Form.resize(463, 288)
         self.start = start
@@ -77,21 +78,21 @@ class allSee_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "返回游戏关卡页"))
-        self.label_2.setText(_translate("Form", "观看游戏宣传视频"))
+        self.label_2.setText(_translate("Form", "观看游戏结尾视频(建议通关后选择)"))
         self.label_3.setText(_translate("Form", "返回首页 "))
 
 
     @pyqtSlot()
     def Return(self):
         self.tmp = QWidget()
-        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()
 
     @pyqtSlot()
     def next(self):
         self.tmp = QWidget()
-        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()
 

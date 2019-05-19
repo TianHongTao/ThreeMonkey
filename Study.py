@@ -24,7 +24,8 @@ class myLabel(QLabel):
             self.clicked.emit()
 
 class Study_Form(object):
-    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
+        self.ending = ending
         self.start = start
         self.onlearning = onlearning
         self.readMe = readMe
@@ -90,7 +91,7 @@ class Study_Form(object):
     @pyqtSlot()
     def learning(self):
         self.tmp = QWidget()
-        self.onlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.onlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.tmp.show()
         self.Form.hide()
         self.onlearning.show_camera()
@@ -98,6 +99,6 @@ class Study_Form(object):
     @pyqtSlot()
     def next(self):
         self.tmp = QWidget()
-        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.tmp.show()
         self.Form.hide()

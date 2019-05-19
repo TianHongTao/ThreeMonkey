@@ -17,9 +17,8 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
 FILE1 = "/Users/denhiroshi/Downloads/毕设最终视频/不听.png"
-FILE2 = "img/2.png"
+FILE2 = "/Users/denhiroshi/Downloads/毕设最终视频/不看.png"
 FILE3 = "/Users/denhiroshi/Downloads/毕设最终视频/不说.png"
-FILE4 = "/Users/denhiroshi/Downloads/毕设最终视频/不说.png"
 
 WORDS1 = "等待识别中, 请做出左图姿势"
 WORDS2 = "识别失败, 请再次做出左图姿势"
@@ -28,10 +27,10 @@ WORDS3 = "(识别成功)干得漂亮"
 PATH1 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不听 选择后.mov")
 PATH2 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不看 后 新.mov")
 PATH3 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不说 后.mov")
-PATH4 = QUrl("file:///Users/denhiroshi/Desktop/＋_＋ 2019-04-04 09.32.05.mp4")
 
 class Onlearn_Form(object):
-    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, tag = None):
+    def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending, tag = None):
+        self.ending = ending
         Form.setObjectName("Form")
         Form.resize(648, 454)
         self.tag = tag
@@ -47,7 +46,7 @@ class Onlearn_Form(object):
         self.finishlearning = finishlearning
         self.Form = Form
         self.tmp = None
-        self.featrure = [False,False,False,False]
+        self.featrure = [False,False,False]
         self.camera = cv2.VideoCapture(0)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -150,9 +149,6 @@ class Onlearn_Form(object):
         if self.test == 150:
             self.featrure[2] = True
 
-        if self.test == 200:
-            self.featrure[3] = True
-
         if not self.featrure[0]:
             self.retranslateUi(self.Form, showImage, FILE1, WORDS1, 1)
             # threading.Timer(0.05, self.show_camera).start()
@@ -162,14 +158,12 @@ class Onlearn_Form(object):
         elif not self.featrure[2]:
             self.retranslateUi(self.Form, showImage, FILE3, WORDS1, 1)
             # threading.Timer(0.05, self.show_camera).start()
-        elif not self.featrure[3]:
-            self.retranslateUi(self.Form, showImage, FILE3, WORDS1, 1)
 
         if not (False in self.featrure):
             self.timer.stop()
             self.camera.release()
             self.tmp = QWidget()
-            self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+            self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
             self.tmp.show()
             self.Form.hide()
 
@@ -189,9 +183,6 @@ class Onlearn_Form(object):
         if self.test == 100:
             self.featrure[2] = True
 
-        if self.test == 100:
-            self.featrure[3] = True
-
         if tag == "NoListen":
             if self.featrure[0]:
                 self.noListen()
@@ -202,16 +193,11 @@ class Onlearn_Form(object):
                 self.noSee()
             else:
                 self.retranslateUi(self.Form, showImage, FILE2, WORDS1, 2)
-        elif tag == "NoSay":
+        else:
             if self.featrure[2]:
                 self.noSay()
             else:
                 self.retranslateUi(self.Form, showImage, FILE3, WORDS1, 2)
-        else:
-            if self.featrure[3]:
-                self.four()
-            else:
-                self.retranslateUi(self.Form, showImage, FILE4, WORDS1, 2)
 
     def noListen(self):
         self.timer2.stop()
@@ -219,7 +205,7 @@ class Onlearn_Form(object):
         self.Form.hide()
         self.flag = "NoListen"
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
-                          self.whatdo, self.allsee, self.finish, self.finishlearning)
+                          self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
         playlist = QMediaPlaylist()
         playlist.addMedia(QMediaContent(PATH1))
@@ -233,7 +219,7 @@ class Onlearn_Form(object):
         self.Form.hide()
         self.flag = "NoSee"
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
-                          self.whatdo, self.allsee, self.finish, self.finishlearning)
+                          self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
         playlist = QMediaPlaylist()
         playlist.addMedia(QMediaContent(PATH2))
@@ -247,7 +233,7 @@ class Onlearn_Form(object):
         self.Form.hide()
         self.flag = "NoSay"
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
-                          self.whatdo, self.allsee, self.finish, self.finishlearning)
+                          self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
         playlist = QMediaPlaylist()
         playlist.addMedia(QMediaContent(PATH3))
@@ -255,24 +241,11 @@ class Onlearn_Form(object):
         self.window.player.setPlaylist(playlist)  # 选取视频文件
         self.window.player.play()  # 播放视频
 
-    def four(self):
-        self.timer2.stop()
-        self.camera.release()
-        self.Form.hide()
-        self.flag = "tmp"
-        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
-                          self.whatdo, self.allsee, self.finish, self.finishlearning)
-        self.window.player.setVideoOutput(self.window.vw)
-        playlist = QMediaPlaylist()
-        playlist.addMedia(QMediaContent(PATH4))
-        playlist.setPlaybackMode(0)
-        self.window.player.setPlaylist(playlist)  # 选取视频文件
-        self.window.player.play()  # 播放视频
-
 
 class GUI(QWidget):
-    def __init__(self, Form, flag, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+    def __init__(self, Form, flag, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
         super(GUI,self).__init__()
+        self.ending = ending
         self.start = start
         self.onlearning = onlearning
         self.readMe = readMe
@@ -285,7 +258,7 @@ class GUI(QWidget):
         self.isFirst = True
         self.flag = flag
         self.Form = QWidget()
-        self.allsee.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.allsee.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.layout = QVBoxLayout()
         self.vw = QVideoWidget()
         self.player = QMediaPlayer()
@@ -312,8 +285,15 @@ class GUI(QWidget):
     @pyqtSlot()
     def Next(self):
         if self.player.state() == QMediaPlayer.StoppedState:
-            print(self.flag)
-            self.vw.hide()
-            self.showMinimized()
-            self.close()
-            self.Form.show()
+            if not False in self.choose.choice:
+                self.vw.hide()
+                self.showMinimized()
+                self.close()
+                self.Form = QWidget()
+                self.ending.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+                self.Form.show()
+            else:
+                self.vw.hide()
+                self.showMinimized()
+                self.close()
+                self.Form.show()

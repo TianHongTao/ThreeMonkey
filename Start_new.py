@@ -20,7 +20,8 @@ class myLabel(QLabel):
             self.clicked.emit()
 
 class StartNew_Form(object):
-    def setupUi(self, Form, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+    def setupUi(self, Form, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
+        self.ending = ending
         self.onlearning = onlearning
         self.readMe = readMe
         self.study = study
@@ -45,7 +46,7 @@ class StartNew_Form(object):
         font.setWeight(50)
         self.tmp = None
         self.label.setFont(font)
-        self.label.setStyleSheet("font: 64pt \"STKaiti\";")
+        self.label.setStyleSheet("font: 64pt \"字魂24号-镇魂手书\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
@@ -91,13 +92,13 @@ class StartNew_Form(object):
     @pyqtSlot()
     def readME(self):
         self.tmp = QWidget()
-        self.readMe.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.readMe.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()
 
     @pyqtSlot()
     def startGame(self):
         self.tmp = QWidget()
-        self.study.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.study.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()

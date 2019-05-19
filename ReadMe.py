@@ -14,7 +14,8 @@ from Study import Study_Form,myLabel
 
 
 class ReadMe_Form(object):
-    def setupUi(self, Form, start , onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning):
+    def setupUi(self, Form, start , onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
+        self.ending = ending
         self.onlearning = onlearning
         self.readMe = readMe
         self.study = study
@@ -83,13 +84,13 @@ class ReadMe_Form(object):
     @pyqtSlot()
     def Return(self):
         self.tmp = QWidget()
-        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()
 
     @pyqtSlot()
     def Next(self):
         self.tmp = QWidget()
-        self.study.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning)
+        self.study.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
         self.tmp.show()
