@@ -11,6 +11,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtGui import *
 
 PATH = QUrl("file:///Users/denhiroshi/Desktop/＋_＋ 2019-04-04 09.32.05.mp4")
 
@@ -68,6 +69,11 @@ class Ending_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "恭喜你已经成为一名合格的旁观者"))
         self.label_2.setText(_translate("Form", "播放游戏结尾视频"))
+        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = pm.scaled(30,50)
+        cursor = QCursor(pm,-1,-1)
+        self.label_2.setCursor(cursor)
+        self.label.setCursor(cursor)
 
     @pyqtSlot()
     def Next(self):
@@ -75,11 +81,11 @@ class Ending_Form(object):
         self.flag = "NoSee"
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
-        playlist = QMediaPlaylist()
-        playlist.addMedia(QMediaContent(PATH))
-        playlist.setPlaybackMode(0)
-        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.setMedia(QMediaContent(PATH))  # 选取视频文件
         self.window.player.play()  # 播放视频
+        if self.window.isFirst:
+            self.window.player.stateChanged.connect(self.window.Next)
+            self.window.isFirst = False
 
 class GUI(QWidget):
     def __init__(self, Form, flag, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
@@ -96,8 +102,8 @@ class GUI(QWidget):
         self.finishlearning = finishlearning
         self.isFirst = True
         self.flag = flag
-        self.Form = QWidget()
-        self.choose.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+        self.tmp = QWidget()
+        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.layout = QVBoxLayout()
         self.vw = QVideoWidget()
         self.player = QMediaPlayer()
@@ -110,21 +116,16 @@ class GUI(QWidget):
     def keyPressEvent(self,event):
         if (event.key() == Qt.Key_Return):
             self.player.play()  # 播放视频
-            if self.isFirst:
-                self.player.stateChanged.connect(self.Next)
-                self.isFirst = False
         if (event.key() ==  Qt.Key_Space):
             self.player.pause()
         if (event.key() == Qt.Key_Escape):
             self.player.stop()
             self.vw.hide()
-            self.showMinimized()
-            self.close()
+            self.hide()
 
     @pyqtSlot()
     def Next(self):
         self.vw.hide()
-        self.showMinimized()
-        self.close()
+        self.hide()
         self.choose.choice = [False, False, False]
-        self.Form.show()
+        self.tmp.showFullScreen()

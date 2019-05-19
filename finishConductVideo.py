@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 class myLabel(QLabel):
     clicked = pyqtSignal()
@@ -70,6 +71,11 @@ class finish_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "返回游戏关卡页"))
         self.label_2.setText(_translate("Form", "返回首页 "))
+        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = pm.scaled(30,50)
+        cursor = QCursor(pm,-1,-1)
+        self.label_2.setCursor(cursor)
+        self.label.setCursor(cursor)
 
     @pyqtSlot()
     def Return(self):
@@ -77,7 +83,7 @@ class finish_Form(object):
         self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
                            self.finish, self.finishlearning)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 
     @pyqtSlot()
     def choose(self):
@@ -85,7 +91,7 @@ class finish_Form(object):
         self.choose.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee,
                            self.finish, self.finishlearning)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 
 
 

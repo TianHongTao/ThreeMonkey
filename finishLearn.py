@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 class myLabel(QLabel):
     clicked = pyqtSignal()
@@ -35,8 +36,8 @@ class finishlearning_Form(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = myLabel(Form)
-        self.label.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.label.setStyleSheet("font: 16pt \"FZZhengHeiS-EB-GB\";")
+        self.label.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.label.setStyleSheet("font: 30pt \"FZZhengHeiS-EB-GB\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
@@ -49,7 +50,7 @@ class finishlearning_Form(object):
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem3)
         self.label_2 = myLabel(Form)
-        self.label_2.setStyleSheet("font: 36pt \"MF LiHei (Noncommercial)\";")
+        self.label_2.setStyleSheet("font: 80pt \"MF LiHei (Noncommercial)\";")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
@@ -57,7 +58,7 @@ class finishlearning_Form(object):
         spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem4)
         self.label_3 = myLabel(Form)
-        self.label_3.setStyleSheet("font: 20pt \"MF LiHei (Noncommercial)\";")
+        self.label_3.setStyleSheet("font: 60pt \"MF LiHei (Noncommercial)\";")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
@@ -78,18 +79,23 @@ class finishlearning_Form(object):
         self.label.setText(_translate("Form", "你已经完成了所有手势的学习，请在接下来的游戏中合理运用所学知识"))
         self.label_2.setText(_translate("Form", "进入游戏"))
         self.label_3.setText(_translate("Form", "返回首页"))
+        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = pm.scaled(30,50)
+        cursor = QCursor(pm,-1,-1)
+        self.label_2.setCursor(cursor)
+        self.label_3.setCursor(cursor)
 
     @pyqtSlot()
     def Return(self):
         self.tmp = QWidget()
         self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 
     @pyqtSlot()
     def next(self):
         self.tmp = QWidget()
         self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 

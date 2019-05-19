@@ -11,6 +11,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from  PyQt5.QtGui import *
 
 
 class myLabel(QLabel):
@@ -46,12 +47,12 @@ class StartNew_Form(object):
         font.setWeight(50)
         self.tmp = None
         self.label.setFont(font)
-        self.label.setStyleSheet("font: 64pt \"字魂24号-镇魂手书\";")
+        self.label.setStyleSheet("font: 240pt \"字魂24号-镇魂手书\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.label_2 =myLabel(Form)
-        self.label_2.setStyleSheet("font: 18pt \"Weibei SC\";")
+        self.label_2.setStyleSheet("font: 40pt \"Weibei SC\";")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
@@ -60,7 +61,7 @@ class StartNew_Form(object):
         self.label_3 = myLabel(Form)
         self.label_3.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.label_3.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        self.label_3.setStyleSheet("font: 24pt \"MF LiHei (Noncommercial)\";")
+        self.label_3.setStyleSheet("font: 80pt \"MF LiHei (Noncommercial)\";")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
@@ -69,7 +70,7 @@ class StartNew_Form(object):
         self.label_4 = myLabel(Form)
         self.label_4.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.label_4.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        self.label_4.setStyleSheet("font: 18pt \"MF LiHei (Noncommercial)\";")
+        self.label_4.setStyleSheet("font: 60pt \"MF LiHei (Noncommercial)\";")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.verticalLayout.addWidget(self.label_4)
@@ -86,19 +87,26 @@ class StartNew_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">三不猴</span></p></body></html>"))
         self.label_2.setText(_translate("Form", "在校园暴力面前你会怎么做"))
+        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = pm.scaled(30,50)
+        cursor = QCursor(pm,-1,-1)
         self.label_3.setText(_translate("Form", "游戏简介"))
+        self.label_3.setCursor(cursor)
         self.label_4.setText(_translate("Form", "开始游戏"))
+        self.label_4.setCursor(cursor)
 
     @pyqtSlot()
     def readME(self):
         self.tmp = QWidget()
         self.readMe.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 
     @pyqtSlot()
     def startGame(self):
         self.tmp = QWidget()
         self.study.setupUi(self.tmp, self, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+        self.tmp.showFullScreen()
         self.Form.hide()
-        self.tmp.show()
+
+

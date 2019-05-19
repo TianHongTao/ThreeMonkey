@@ -30,6 +30,7 @@ PATH3 = QUrl("file:///Users/denhiroshi/Downloads/毕设最终视频/不说 后.m
 
 class Onlearn_Form(object):
     def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending, tag = None):
+        self.bool = True
         self.ending = ending
         Form.setObjectName("Form")
         Form.resize(648, 454)
@@ -51,7 +52,7 @@ class Onlearn_Form(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.words = QtWidgets.QLabel(Form)
-        self.words.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.words.setMaximumSize(QtCore.QSize(16777215, 35))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(159, 251, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -83,7 +84,7 @@ class Onlearn_Form(object):
         self.words.setPalette(palette)
         self.words.setStyleSheet("background-color: rgb(159, 251, 255);\n"
 "border-color: rgb(0,0,0);\n"
-"font: 14pt \"FZZhengHeiS-EB-GB\";")
+"font: 30pt \"FZZhengHeiS-EB-GB\";")
         self.words.setAlignment(QtCore.Qt.AlignCenter)
         self.words.setObjectName("words")
         self.verticalLayout.addWidget(self.words)
@@ -95,8 +96,8 @@ class Onlearn_Form(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.label_4 = QtWidgets.QLabel(Form)
-        self.label_4.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.label_4.setStyleSheet("font: 12pt \"FZZhengHeiS-EB-GB\";")
+        self.label_4.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.label_4.setStyleSheet("font: 30pt \"FZZhengHeiS-EB-GB\";")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.verticalLayout_2.addWidget(self.label_4)
@@ -116,12 +117,12 @@ class Onlearn_Form(object):
             self.timer2.timeout.connect(self.Game)
 
 
-        self.retranslateUi(Form, None ,FILE1, "等待识别中, 请作出左图姿势", None)
+        # self.retranslateUi(Form, None ,FILE1, "等待识别中, 请作出左图姿势", None)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form, Qimg, filename, words, way):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Form23"))
         self.words.setText(_translate("Form", "TextLabel"))
         self.pictureShow.setPixmap(QtGui.QPixmap(filename))
         self.label_4.setText(_translate("Form", words))
@@ -133,6 +134,7 @@ class Onlearn_Form(object):
             self.timer.start(20)
         elif way == 2:
             self.timer2.start(20)
+        # self.Form.showFullScreen()
 
     def show_camera(self):
         self.test += 1
@@ -162,10 +164,13 @@ class Onlearn_Form(object):
         if not (False in self.featrure):
             self.timer.stop()
             self.camera.release()
+            self.Form.hide()
             self.tmp = QWidget()
             self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
-            self.tmp.show()
-            self.Form.hide()
+            self.tmp.showFullScreen()
+
+        if not self.Form.isFullScreen():
+            self.Form.showFullScreen()
 
     def Game(self):
         tag = self.tag
@@ -199,6 +204,10 @@ class Onlearn_Form(object):
             else:
                 self.retranslateUi(self.Form, showImage, FILE3, WORDS1, 2)
 
+        if not self.bool:
+            if not self.Form.isFullScreen():
+                self.Form.showFullScreen()
+
     def noListen(self):
         self.timer2.stop()
         self.camera.release()
@@ -207,11 +216,11 @@ class Onlearn_Form(object):
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
                           self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
-        playlist = QMediaPlaylist()
-        playlist.addMedia(QMediaContent(PATH1))
-        playlist.setPlaybackMode(0)
-        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.setMedia(QMediaContent(PATH1))  # 选取视频文件
         self.window.player.play()  # 播放视频
+        if self.window.isFirst:
+            self.window.player.stateChanged.connect(self.window.Next)
+            self.window.isFirst = False
 
     def noSee(self):
         self.timer2.stop()
@@ -221,11 +230,11 @@ class Onlearn_Form(object):
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
                           self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
-        playlist = QMediaPlaylist()
-        playlist.addMedia(QMediaContent(PATH2))
-        playlist.setPlaybackMode(0)
-        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.setMedia(QMediaContent(PATH2))  # 选取视频文件
         self.window.player.play()  # 播放视频
+        if self.window.isFirst:
+            self.window.player.stateChanged.connect(self.window.Next)
+            self.window.isFirst = False
 
     def noSay(self):
         self.timer2.stop()
@@ -235,11 +244,11 @@ class Onlearn_Form(object):
         self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
                           self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
-        playlist = QMediaPlaylist()
-        playlist.addMedia(QMediaContent(PATH3))
-        playlist.setPlaybackMode(0)
-        self.window.player.setPlaylist(playlist)  # 选取视频文件
+        self.window.player.setMedia(QMediaContent(PATH3))  # 选取视频文件
         self.window.player.play()  # 播放视频
+        if self.window.isFirst:
+            self.window.player.stateChanged.connect(self.window.Next)
+            self.window.isFirst = False
 
 
 class GUI(QWidget):
@@ -271,15 +280,12 @@ class GUI(QWidget):
     def keyPressEvent(self,event):
         if (event.key() == Qt.Key_Return):
             self.player.play()  # 播放视频
-            if self.isFirst:
-                self.player.stateChanged.connect(self.Next)
-                self.isFirst = False
         if (event.key() ==  Qt.Key_Space):
             self.player.pause()
         if (event.key() == Qt.Key_Escape):
             self.player.stop()
             self.vw.hide()
-            self.showMinimized()
+            self.hide()
             self.close()
 
     @pyqtSlot()
@@ -287,13 +293,11 @@ class GUI(QWidget):
         if self.player.state() == QMediaPlayer.StoppedState:
             if not False in self.choose.choice:
                 self.vw.hide()
-                self.showMinimized()
-                self.close()
-                self.Form = QWidget()
-                self.ending.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
-                self.Form.show()
+                self.hide()
+                self.tmp = QWidget()
+                self.ending.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+                self.tmp.showFullScreen()
             else:
                 self.vw.hide()
-                self.showMinimized()
                 self.close()
-                self.Form.show()
+                self.Form.showFullScreen()

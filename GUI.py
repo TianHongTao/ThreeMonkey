@@ -30,5 +30,5 @@ if __name__ == '__main__':
     finish = finish_Form()
     ending = Ending_Form()
     StartForm.setupUi(start, onlearn, readMe, study, choose, whatDo, allsee, finish, finishlearning, ending)
-    start.show()
+    start.showFullScreen()
     sys.exit(app.exec_())

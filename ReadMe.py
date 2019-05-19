@@ -11,6 +11,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot
 from Study import Study_Form,myLabel
+from  PyQt5.QtGui import *
 
 
 class ReadMe_Form(object):
@@ -34,14 +35,14 @@ class ReadMe_Form(object):
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.label = myLabel(Form)
-        self.label.setStyleSheet("font: 20pt \"MF LiHei (Noncommercial)\";")
+        self.label.setStyleSheet("font: 80pt \"MF LiHei (Noncommercial)\";")
         self.label.setIndent(80)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.label_2 = myLabel(Form)
         self.label_2.setMinimumSize(QtCore.QSize(515, 120))
-        self.label_2.setMaximumSize(QtCore.QSize(515, 120))
-        self.label_2.setStyleSheet("font: 14pt \"Songti SC\";")
+        self.label_2.setMaximumSize(QtCore.QSize(1000, 300))
+        self.label_2.setStyleSheet("font: 30pt \"Songti SC\";")
         self.label_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_2.setIndent(100)
         self.label_2.setObjectName("label_2")
@@ -49,13 +50,13 @@ class ReadMe_Form(object):
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.label_3 = myLabel(Form)
-        self.label_3.setStyleSheet("font: 18pt \"MF LiHei (Noncommercial)\";")
+        self.label_3.setStyleSheet("font: 80pt \"MF LiHei (Noncommercial)\";")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
         self.label_3.clicked.connect(self.Next)
         self.label_4 = myLabel(Form)
-        self.label_4.setStyleSheet("font: 14pt \"MF LiHei (Noncommercial)\";")
+        self.label_4.setStyleSheet("font: 60pt \"MF LiHei (Noncommercial)\";")
         self.label_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_4.setIndent(250)
         self.label_4.setObjectName("label_4")
@@ -80,17 +81,22 @@ class ReadMe_Form(object):
 ""))
         self.label_3.setText(_translate("Form", "进入游戏"))
         self.label_4.setText(_translate("Form", "返回首页"))
+        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = pm.scaled(30,50)
+        cursor = QCursor(pm,-1,-1)
+        self.label_3.setCursor(cursor)
+        self.label_4.setCursor(cursor)
 
     @pyqtSlot()
     def Return(self):
         self.tmp = QWidget()
         self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
 
     @pyqtSlot()
     def Next(self):
         self.tmp = QWidget()
         self.study.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.Form.hide()
-        self.tmp.show()
+        self.tmp.showFullScreen()
