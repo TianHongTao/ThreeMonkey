@@ -15,6 +15,8 @@ from allSee import allSee_Form
 from ending import Ending_Form
 from finishConductVideo import finish_Form
 import sys
+from sklearn.externals import joblib
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -32,3 +34,4 @@ if __name__ == '__main__':
     StartForm.setupUi(start, onlearn, readMe, study, choose, whatDo, allsee, finish, finishlearning, ending)
     start.showFullScreen()
     sys.exit(app.exec_())
+

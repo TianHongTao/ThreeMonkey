@@ -13,7 +13,7 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import *
 
-PATH = QUrl("file:///Users/denhiroshi/Desktop/＋_＋ 2019-04-04 09.32.05.mp4")
+PATH = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/彩蛋.mov")
 
 class myLabel(QLabel):
     clicked = pyqtSignal()
@@ -103,7 +103,7 @@ class GUI(QWidget):
         self.isFirst = True
         self.flag = flag
         self.tmp = QWidget()
-        self.choose.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+        self.start.setupUi(self.tmp, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.layout = QVBoxLayout()
         self.vw = QVideoWidget()
         self.player = QMediaPlayer()
