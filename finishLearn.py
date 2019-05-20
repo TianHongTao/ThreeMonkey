@@ -79,7 +79,7 @@ class finishlearning_Form(object):
         self.label.setText(_translate("Form", "你已经完成了所有手势的学习，请在接下来的游戏中合理运用所学知识"))
         self.label_2.setText(_translate("Form", "进入游戏"))
         self.label_3.setText(_translate("Form", "返回首页"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_2.setCursor(cursor)

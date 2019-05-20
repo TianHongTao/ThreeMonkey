@@ -19,24 +19,25 @@ from sklearn.externals import joblib
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
-FILE1 = "/Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不听.png"
-FILE2 = "/Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不看.png"
-FILE3 = "/Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不说.png"
+FILE1 = "/Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不听.png"
+FILE2 = "/Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不看.png"
+FILE3 = "/Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不说.png"
 
 WORDS1 = "等待识别中, 请做出左图姿势"
 WORDS2 = "识别失败, 请再次做出左图姿势"
 WORDS3 = "(识别成功)干得漂亮"
 
-PATH1 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不听 选择后.mov")
-PATH2 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不看 后 新.mov")
-PATH3 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不说 后.mov")
+PATH1 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不听 选择后.mov")
+PATH2 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不看 后 新.mov")
+PATH3 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不说 后.mov")
+PATH4 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/识别成功.mov")
 
 class Onlearn_Form(object):
     def setupUi(self, Form, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending, tag = None):
         self.featrure_help = 0
         self.tmpPicture = None
         self.InImage = None
-        self.clf = joblib.load("/Users/denhiroshi/Downloads/ThreeMonkey/model/tree.pkl")
+        self.clf = joblib.load("/Users/lixiaojuan/Downloads/ThreeMonkey/model/tree.pkl")
         self.sc = StandardScaler()
         self.bool = True
         self.ending = ending
@@ -173,7 +174,7 @@ class Onlearn_Form(object):
                 if self.tmpPicture[0] == 1:
                     self.retranslateUi(self.Form, showImage, FILE2, WORDS3, 1, WORDS1)
                     self.featrure[1] = True
-                    self.featrure_help = 150
+                    self.featrure_help = 100
                 else:
                     self.retranslateUi(self.Form, showImage, FILE2, WORDS2, 1, WORDS1)
             else:
@@ -207,15 +208,26 @@ class Onlearn_Form(object):
             self.retranslateUi(self.Form, showImage, FILE3, WORDS1, 1, WORDS1)
             # threading.Timer(0.05, self.show_camera).start()
 
-        if not (False in self.featrure):
+        if not (False in self.featrure):            
             self.featrure = [False, False, False]
             self.featrure_help = 0
             self.timer.stop()
             self.camera.release()
             self.Form.hide()
-            self.tmp = QWidget()
-            self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
-            self.tmp.showFullScreen()
+            self.flag = "NoListen"
+            self.window = GUI1(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+            self.window.player.setVideoOutput(self.window.vw)
+            self.window.player.setMedia(QMediaContent(PATH4))  # 选取视频文件
+            self.window.player.play()  # 播放视频
+            if self.window.isFirst:
+                self.window.player.stateChanged.connect(self.window.Next)
+                self.window.isFirst = False
+
+
+
+            # self.tmp = QWidget()
+            # self.finishlearning.setupUi(self.tmp, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+            # self.tmp.showFullScreen()
 
         if not self.Form.isFullScreen():
             self.Form.showFullScreen()
@@ -288,8 +300,7 @@ class Onlearn_Form(object):
         self.camera.release()
         self.Form.hide()
         self.flag = "NoListen"
-        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,
-                          self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+        self.window = GUI(self.Form, self.flag, self.start, self.onlearning, self.readMe, self.study, self.choose,self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
         self.window.player.setVideoOutput(self.window.vw)
         self.window.player.setMedia(QMediaContent(PATH1))  # 选取视频文件
         self.window.player.play()  # 播放视频
@@ -376,3 +387,47 @@ class GUI(QWidget):
                 self.vw.hide()
                 self.close()
                 self.Form.showFullScreen()
+
+class GUI1(QWidget):
+    def __init__(self, Form, flag, start, onlearning, readMe, study, choose, whatdo, allsee, finish, finishlearning, ending):
+        super(GUI1,self).__init__()
+        self.start = start
+        self.ending = ending
+        self.onlearning = onlearning
+        self.readMe = readMe
+        self.study = study
+        self.choose = choose
+        self.whatdo = whatdo
+        self.allsee = allsee
+        self.finish = finish
+        self.finishlearning = finishlearning
+        self.isFirst = True
+        self.flag = flag
+        self.Form = QWidget()
+        self.finishlearning.setupUi(self.Form, self.start, self.onlearning, self.readMe, self.study, self.choose, self.whatdo, self.allsee, self.finish, self.finishlearning, self.ending)
+        self.layout = QVBoxLayout()
+        self.vw = QVideoWidget()
+        self.player = QMediaPlayer()
+        self.vw.setAspectRatioMode(Qt.IgnoreAspectRatio)
+        # self.vw.setFullScreen(True)
+        self.layout.addWidget(self.vw)
+        self.setLayout(self.layout)
+        self.showFullScreen()
+
+    def keyPressEvent(self,event):
+        if (event.key() == Qt.Key_Return):
+            self.player.play()  # 播放视频
+        if (event.key() ==  Qt.Key_Space):
+            self.player.pause()
+        if (event.key() == Qt.Key_Escape):
+            self.player.stop()
+            self.vw.hide()
+            self.hide()
+            self.Form.showFullScreen()
+
+    @pyqtSlot()
+    def Next(self):
+        if self.player.state() == QMediaPlayer.StoppedState:
+            self.vw.hide()
+            self.hide()
+            self.Form.showFullScreen()
