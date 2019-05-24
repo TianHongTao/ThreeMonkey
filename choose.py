@@ -13,9 +13,9 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import *
 
-PATH1 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/声音 听 前改.mov")
-PATH2 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不看 前改.mov")
-PATH3 = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/不说 后改.mov")
+PATH1 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/声音 听 前改.mov")
+PATH2 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不看 前改.mov")
+PATH3 = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/不说 后改.mov")
 
 
 class GUI(QWidget):
@@ -146,7 +146,7 @@ class Choose_Form(object):
         self.label_2.setText(_translate("Form", "3"))
         # self.label_4.setText(_translate("Form", "4"))
         self.label_5.setText(_translate("Form", "返回首页"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_2.setCursor(cursor)

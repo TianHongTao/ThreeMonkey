@@ -90,7 +90,7 @@ class ReadMe_Form(object):
 ""))
         self.label_3.setText(_translate("Form", "进入游戏"))
         self.label_4.setText(_translate("Form", "返回首页"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_3.setCursor(cursor)

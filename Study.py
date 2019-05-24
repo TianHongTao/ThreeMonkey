@@ -88,7 +88,7 @@ class Study_Form(object):
         self.label.setText(_translate("Form", "说明：进入游戏前，请您根据自身状况进行手势学习，或直接进入游戏"))
         self.label_2.setText(_translate("Form", "开始学习"))
         self.label_3.setText(_translate("Form", "我已学会手势操作，直接进入游戏"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_2.setCursor(cursor)

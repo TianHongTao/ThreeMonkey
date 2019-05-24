@@ -13,7 +13,7 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import *
 
-PATH = QUrl("file:///Users/denhiroshi/Downloads/ThreeMonkey/毕设最终视频/彩蛋.mov")
+PATH = QUrl("file:///Users/lixiaojuan/Downloads/ThreeMonkey/毕设最终视频/彩蛋.mov")
 
 class myLabel(QLabel):
     clicked = pyqtSignal()
@@ -69,7 +69,7 @@ class Ending_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "恭喜你已经成为一名合格的旁观者"))
         self.label_2.setText(_translate("Form", "播放游戏结尾视频"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_2.setCursor(cursor)

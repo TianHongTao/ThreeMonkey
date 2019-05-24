@@ -96,7 +96,7 @@ class StartNew_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">三不猴</span></p></body></html>"))
         self.label_2.setText(_translate("Form", "在校园暴力面前你会怎么做"))
-        pm = QPixmap('/Users/denhiroshi/Desktop/不看不听不说.png')
+        pm = QPixmap('/Users/lixiaojuan/Desktop/不看不听不说.png')
         pm = pm.scaled(30,50)
         cursor = QCursor(pm,-1,-1)
         self.label_3.setText(_translate("Form", "游戏简介"))
