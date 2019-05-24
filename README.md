@@ -1,4 +1,4 @@
-# ThreeMonkey（项目跟进中）
+# ThreeMonkey
 轮廓获取+人脸识别+图像分类+pyqt5
 
 ## 说明
@@ -15,3 +15,6 @@
 ![](/img/info3.jpeg)
 ![](/img/info4.jpeg)
 ![](/img/info5.jpeg)
+
+## 软件大致流程
+![](/img/软件大致流程图.png)
