@@ -159,7 +159,7 @@ class Onlearn_Form(object):
         size = (int(show.shape[1] * 0.8), int(show.shape[0] * 0.8))
         tmp = cv2.resize(show, size, interpolation=cv2.INTER_AREA)
         showImage = QtGui.QImage(tmp.data, tmp.shape[1], tmp.shape[0], QtGui.QImage.Format_RGB888)
-        # 缺少模型输入检测模块,本处为测试
+        # 模型输入检测模块
         self.tmpPicture = self.clf.predict(self.sc.fit_transform(cv2.resize(image[0].astype(np.float32), (400, 400), interpolation=cv2.INTER_AREA)).astype(np.float32).reshape(1, -1))
         if self.featrure[0] == False:
             if self.tmpPicture[0] == 0:
