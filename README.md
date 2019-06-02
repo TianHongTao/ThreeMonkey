@@ -1,12 +1,5 @@
-# ThreeMonkey
+# ThreeMonkey（项目跟进中）
 轮廓获取+人脸识别+图像分类+pyqt5
-
-## 配置
-+ qt 5.6.3
-+ pyqt 5.6.0
-+ qtpy 1.5.2
-+ sklearn 0.20.2
-+ opencv 3.4.2
 
 ## 说明
 三不猴 交互游戏装置
@@ -22,6 +15,3 @@
 ![](/img/info3.jpeg)
 ![](/img/info4.jpeg)
 ![](/img/info5.jpeg)
-
-## 软件大致流程
-![](/img/软件大致流程图.png)
